@@ -51,6 +51,8 @@ Partial Class Form1
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.delayTimer = New System.Windows.Forms.Timer(Me.components)
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -133,6 +135,8 @@ Partial Class Form1
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.ComboBox2)
+        Me.GroupBox2.Controls.Add(Me.Label8)
         Me.GroupBox2.Controls.Add(Me.ComboBox1)
         Me.GroupBox2.Controls.Add(Me.Label7)
         Me.GroupBox2.Controls.Add(Me.GroupBox3)
@@ -317,6 +321,26 @@ Partial Class Form1
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Testing"
         '
+        'ComboBox2
+        '
+        Me.ComboBox2.DisplayMember = "Left"
+        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Items.AddRange(New Object() {"Single", "Double"})
+        Me.ComboBox2.Location = New System.Drawing.Point(98, 51)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(121, 23)
+        Me.ComboBox2.TabIndex = 9
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(6, 55)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(66, 15)
+        Me.Label8.TabIndex = 8
+        Me.Label8.Text = "Click Type: "
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -377,4 +401,6 @@ Partial Class Form1
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Label7 As Label
     Friend WithEvents GroupBox8 As GroupBox
+    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents Label8 As Label
 End Class

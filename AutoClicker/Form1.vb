@@ -20,6 +20,7 @@ Public Class Form1
 
     Dim delay As Integer
     Dim selectedItem As String
+    Dim selectedItem2 As String
 
     Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
 
@@ -28,10 +29,17 @@ Public Class Form1
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         delayTimer.Enabled = False
         If selectedItem = "Left" Then
-            mouse_event(mouseclickdown, 0, 0, 0, 0)
-            mouse_event(mouseclickup, 0, 0, 0, 0)
-            mouse_event(mouseclickdown, 0, 0, 0, 0)
-            mouse_event(mouseclickup, 0, 0, 0, 0)
+
+            If selectedItem2 = "Double" Then
+                mouse_event(mouseclickdown, 0, 0, 0, 0)
+                mouse_event(mouseclickup, 0, 0, 0, 0)
+                mouse_event(mouseclickdown, 0, 0, 0, 0)
+                mouse_event(mouseclickup, 0, 0, 0, 0)
+            ElseIf selectedItem2 = "Single" Then
+                mouse_event(mouseclickdown, 0, 0, 0, 0)
+                mouse_event(mouseclickup, 0, 0, 0, 0)
+            End If
+
         ElseIf selectedItem = "Right" Then
             mouse_event(mouserightdown, 0, 0, 0, 0)
             mouse_event(mouserightup, 0, 0, 0, 0)
@@ -77,6 +85,7 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox1.Text = "100"
         ComboBox1.SelectedIndex = 0
+        ComboBox2.SelectedIndex = 0
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
@@ -161,5 +170,9 @@ Public Class Form1
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         selectedItem = ComboBox1.Items(ComboBox1.SelectedIndex)
+    End Sub
+
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
+        selectedItem2 = ComboBox2.Items(ComboBox2.SelectedIndex)
     End Sub
 End Class

@@ -16,6 +16,8 @@ Public Class Form1
     Dim clickCount As Integer = 0
     Dim clickAmount As Integer
 
+    Dim delay As Integer
+
     Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
 
     End Sub
@@ -33,7 +35,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Timer1.Enabled = True
+        delayTimer.Enabled = True
 
 
     End Sub
@@ -62,6 +64,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox1.Text = "100"
+        ComboBox1.SelectedText = "Left"
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
@@ -127,5 +130,20 @@ Public Class Form1
 
 
         End Try
+    End Sub
+
+    Private Sub TextBox5_TextChanged(sender As Object, e As EventArgs) Handles TextBox5.TextChanged
+        Dim text As String = TextBox5.Text
+        Try
+            delay = CInt(text)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+        delayTimer.Interval = (delay * 1000) + 1
+    End Sub
+
+    Private Sub delayTimer_Tick(sender As Object, e As EventArgs) Handles delayTimer.Tick
+        Timer1.Enabled = True
     End Sub
 End Class

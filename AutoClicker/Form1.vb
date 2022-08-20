@@ -3,6 +3,8 @@ Public Class Form1
     Private Declare Sub mouse_event Lib "user32" (ByVal dwflags As Long, ByVal dx As Long, ByVal cbuttons As Long, ByVal dy As Long, ByVal dwExtraInfo As Long)
     Private Const mouseclickup = 4
     Private Const mouseclickdown = 2
+    Private Const mouserightdown = 8
+    Private Const mouserightup = 10
 
 
     Dim milli As Integer
@@ -17,15 +19,24 @@ Public Class Form1
     Dim clickAmount As Integer
 
     Dim delay As Integer
+    Dim selectedItem As String
 
     Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
 
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        delayTimer.Enabled = False
+        If selectedItem = "Left" Then
+            mouse_event(mouseclickdown, 0, 0, 0, 0)
+            mouse_event(mouseclickup, 0, 0, 0, 0)
+            mouse_event(mouseclickdown, 0, 0, 0, 0)
+            mouse_event(mouseclickup, 0, 0, 0, 0)
+        ElseIf selectedItem = "Right" Then
+            mouse_event(mouserightdown, 0, 0, 0, 0)
+            mouse_event(mouserightup, 0, 0, 0, 0)
+        End If
 
-        mouse_event(mouseclickdown, 0, 0, 0, 0)
-        mouse_event(mouseclickup, 0, 0, 0, 0)
         clickCount += 1
         If RadioButton1.Checked = True Then
             If clickAmount = clickCount Then
@@ -36,6 +47,7 @@ Public Class Form1
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         delayTimer.Enabled = True
+
 
 
     End Sub
@@ -64,7 +76,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox1.Text = "100"
-        ComboBox1.SelectedText = "Left"
+        ComboBox1.SelectedIndex = 0
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
@@ -145,5 +157,9 @@ Public Class Form1
 
     Private Sub delayTimer_Tick(sender As Object, e As EventArgs) Handles delayTimer.Tick
         Timer1.Enabled = True
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        selectedItem = ComboBox1.Items(ComboBox1.SelectedIndex)
     End Sub
 End Class

@@ -24,45 +24,91 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.TextBox3)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.TextBox2)
+        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 60)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(460, 100)
+        Me.GroupBox1.Size = New System.Drawing.Size(460, 51)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "ClickInterval"
         '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(6, 17)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(86, 23)
+        Me.TextBox3.TabIndex = 5
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(98, 25)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(33, 15)
+        Me.Label4.TabIndex = 4
+        Me.Label4.Text = "mins"
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(138, 17)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(86, 23)
+        Me.TextBox2.TabIndex = 3
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(230, 25)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(50, 15)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "seconds"
+        '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(398, 25)
+        Me.Label2.Location = New System.Drawing.Point(381, 25)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(41, 15)
+        Me.Label2.Size = New System.Drawing.Size(73, 15)
         Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Label2"
+        Me.Label2.Text = "milliseconds"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(292, 22)
+        Me.TextBox1.Location = New System.Drawing.Point(289, 17)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 23)
+        Me.TextBox1.Size = New System.Drawing.Size(86, 23)
         Me.TextBox1.TabIndex = 0
         '
         'Label1
@@ -96,12 +142,64 @@ Partial Class Form1
         '
         'GroupBox4
         '
-        Me.GroupBox4.Location = New System.Drawing.Point(242, 166)
+        Me.GroupBox4.Controls.Add(Me.TextBox4)
+        Me.GroupBox4.Controls.Add(Me.RadioButton2)
+        Me.GroupBox4.Controls.Add(Me.RadioButton1)
+        Me.GroupBox4.Location = New System.Drawing.Point(242, 117)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(230, 100)
         Me.GroupBox4.TabIndex = 3
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Click Repeat"
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(74, 20)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.TextBox4.Size = New System.Drawing.Size(64, 23)
+        Me.TextBox4.TabIndex = 2
+        Me.TextBox4.Text = "1"
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Checked = True
+        Me.RadioButton2.Location = New System.Drawing.Point(13, 49)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(134, 19)
+        Me.RadioButton2.TabIndex = 1
+        Me.RadioButton2.TabStop = True
+        Me.RadioButton2.Text = "Repeat until stopped"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Location = New System.Drawing.Point(13, 22)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(168, 19)
+        Me.RadioButton1.TabIndex = 0
+        Me.RadioButton1.Text = "Repeat                          times"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(28, 35)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(41, 15)
+        Me.Label5.TabIndex = 1
+        Me.Label5.Text = "Label5"
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(12, 9)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 0
+        Me.Button3.Text = "Button3"
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'GroupBox5
         '
@@ -140,7 +238,9 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.ClientSize = New System.Drawing.Size(484, 461)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
@@ -152,6 +252,8 @@ Partial Class Form1
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -168,4 +270,13 @@ Partial Class Form1
     Friend WithEvents Timer1 As Timer
     Friend WithEvents Label2 As Label
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Button3 As Button
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton1 As RadioButton
 End Class

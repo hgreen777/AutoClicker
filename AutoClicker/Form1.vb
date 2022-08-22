@@ -1,5 +1,9 @@
-﻿
+﻿Imports System.Runtime.InteropServices
 Public Class Form1
+    '143 x 255
+    Public Declare Auto Function SetCursorPos Lib "User32.dll" (ByVal x As Integer, ByVal y As Integer) As Long
+    Public Declare Auto Function GetCursorPos Lib "User32.dll" (ByRef p As Point) As Long
+
     Private Declare Sub mouse_event Lib "user32" (ByVal dwflags As Long, ByVal dx As Long, ByVal cbuttons As Long, ByVal dy As Long, ByVal dwExtraInfo As Long)
     Private Const mouseclickup = 4
     Private Const mouseclickdown = 2
@@ -16,7 +20,7 @@ Public Class Form1
 
 
     Dim clickCount As Integer = 0
-    Dim clickAmount As Integer
+    Dim clickAmount As Integer = 1
 
     Dim delay As Integer
     Dim selectedItem As String
@@ -28,6 +32,37 @@ Public Class Form1
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         delayTimer.Enabled = False
+        'Dim p As Point = New Point(0, 0)
+        'GetCursorPos(p)
+        If RadioButton4.Checked = True Then
+            Dim x As Integer
+            Dim y As Integer
+            'Dim test1 As String = TextBox6.Text
+            'Dim test2 As String = TextBox7.Text
+
+            Try
+                'x = CInt(test1)
+                'y = CInt(test2)
+                x = 800
+                y = 800
+
+                SetCursorPos(x, y)
+            Catch ex As Exception
+                MsgBox(ex.Message)
+
+            End Try
+
+            'SetCursorPos(x, y)
+            'Dim p As Point = New Point(0, 0)
+
+            'Dim ran As Boolean = False
+            'If ran = False Then
+            'ursorPos(p)
+            'MsgBox(p.X.ToString, p.Y.ToString)
+            'ran = True
+            'End If
+
+        End If
         If selectedItem = "Left" Then
 
             If selectedItem2 = "Double" Then
@@ -36,13 +71,22 @@ Public Class Form1
                 mouse_event(mouseclickdown, 0, 0, 0, 0)
                 mouse_event(mouseclickup, 0, 0, 0, 0)
             ElseIf selectedItem2 = "Single" Then
+                SetCursorPos(Me.Location.X, Me.Location.Y)
                 mouse_event(mouseclickdown, 0, 0, 0, 0)
                 mouse_event(mouseclickup, 0, 0, 0, 0)
             End If
 
         ElseIf selectedItem = "Right" Then
-            mouse_event(mouserightdown, 0, 0, 0, 0)
-            mouse_event(mouserightup, 0, 0, 0, 0)
+            If selectedItem2 = "Double" Then
+                mouse_event(mouserightdown, 0, 0, 0, 0)
+                mouse_event(mouserightup, 0, 0, 0, 0)
+                mouse_event(mouserightdown, 0, 0, 0, 0)
+                mouse_event(mouserightup, 0, 0, 0, 0)
+            ElseIf selectedItem2 = "Single" Then
+                mouse_event(mouserightdown, 0, 0, 0, 0)
+                mouse_event(mouserightup, 0, 0, 0, 0)
+            End If
+
         End If
 
         clickCount += 1

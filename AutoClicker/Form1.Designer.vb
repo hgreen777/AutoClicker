@@ -32,6 +32,8 @@ Partial Class Form1
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
@@ -42,6 +44,13 @@ Partial Class Form1
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.RadioButton4 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -51,11 +60,10 @@ Partial Class Form1
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.delayTimer = New System.Windows.Forms.Timer(Me.components)
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.SuspendLayout()
@@ -147,6 +155,26 @@ Partial Class Form1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Click Options"
         '
+        'ComboBox2
+        '
+        Me.ComboBox2.DisplayMember = "Left"
+        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Items.AddRange(New Object() {"Single", "Double"})
+        Me.ComboBox2.Location = New System.Drawing.Point(98, 51)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(121, 23)
+        Me.ComboBox2.TabIndex = 9
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(6, 55)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(66, 15)
+        Me.Label8.TabIndex = 8
+        Me.Label8.Text = "Click Type: "
+        '
         'ComboBox1
         '
         Me.ComboBox1.DisplayMember = "Left"
@@ -190,9 +218,9 @@ Partial Class Form1
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(74, 20)
+        Me.TextBox4.Location = New System.Drawing.Point(68, 17)
         Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.RightToLeft = System.Windows.Forms.RightToLeft.Yes
+        Me.TextBox4.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.TextBox4.Size = New System.Drawing.Size(64, 23)
         Me.TextBox4.TabIndex = 2
         Me.TextBox4.Text = "1"
@@ -239,16 +267,89 @@ Partial Class Form1
         '
         'GroupBox5
         '
-        Me.GroupBox5.Location = New System.Drawing.Point(248, 272)
+        Me.GroupBox5.Controls.Add(Me.TextBox7)
+        Me.GroupBox5.Controls.Add(Me.TextBox6)
+        Me.GroupBox5.Controls.Add(Me.Label10)
+        Me.GroupBox5.Controls.Add(Me.Label9)
+        Me.GroupBox5.Controls.Add(Me.Button4)
+        Me.GroupBox5.Controls.Add(Me.RadioButton4)
+        Me.GroupBox5.Controls.Add(Me.RadioButton3)
+        Me.GroupBox5.Location = New System.Drawing.Point(248, 191)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(224, 100)
         Me.GroupBox5.TabIndex = 1
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Cursor Postition"
         '
+        'TextBox7
+        '
+        Me.TextBox7.Location = New System.Drawing.Point(140, 74)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.TextBox7.Size = New System.Drawing.Size(35, 23)
+        Me.TextBox7.TabIndex = 8
+        Me.TextBox7.Text = "1920"
+        '
+        'TextBox6
+        '
+        Me.TextBox6.Location = New System.Drawing.Point(140, 48)
+        Me.TextBox6.Name = "TextBox6"
+        Me.TextBox6.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.TextBox6.Size = New System.Drawing.Size(35, 23)
+        Me.TextBox6.TabIndex = 7
+        Me.TextBox6.Text = "1920"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(125, 77)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(14, 15)
+        Me.Label10.TabIndex = 4
+        Me.Label10.Text = "Y"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(125, 52)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(14, 15)
+        Me.Label9.TabIndex = 3
+        Me.Label9.Text = "X"
+        '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(27, 47)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(94, 23)
+        Me.Button4.TabIndex = 2
+        Me.Button4.Text = "Pick Location"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'RadioButton4
+        '
+        Me.RadioButton4.AutoSize = True
+        Me.RadioButton4.Location = New System.Drawing.Point(7, 53)
+        Me.RadioButton4.Name = "RadioButton4"
+        Me.RadioButton4.Size = New System.Drawing.Size(14, 13)
+        Me.RadioButton4.TabIndex = 1
+        Me.RadioButton4.UseVisualStyleBackColor = True
+        '
+        'RadioButton3
+        '
+        Me.RadioButton3.AutoSize = True
+        Me.RadioButton3.Checked = True
+        Me.RadioButton3.Location = New System.Drawing.Point(7, 22)
+        Me.RadioButton3.Name = "RadioButton3"
+        Me.RadioButton3.Size = New System.Drawing.Size(114, 19)
+        Me.RadioButton3.TabIndex = 0
+        Me.RadioButton3.TabStop = True
+        Me.RadioButton3.Text = "Current Location"
+        Me.RadioButton3.UseVisualStyleBackColor = True
+        '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(12, 378)
+        Me.Button1.Location = New System.Drawing.Point(18, 297)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(224, 71)
         Me.Button1.TabIndex = 0
@@ -257,7 +358,7 @@ Partial Class Form1
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(248, 378)
+        Me.Button2.Location = New System.Drawing.Point(248, 297)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(224, 71)
         Me.Button2.TabIndex = 4
@@ -321,32 +422,12 @@ Partial Class Form1
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Testing"
         '
-        'ComboBox2
-        '
-        Me.ComboBox2.DisplayMember = "Left"
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Items.AddRange(New Object() {"Single", "Double"})
-        Me.ComboBox2.Location = New System.Drawing.Point(98, 51)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(121, 23)
-        Me.ComboBox2.TabIndex = 9
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 55)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(66, 15)
-        Me.Label8.TabIndex = 8
-        Me.Label8.Text = "Click Type: "
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveBorder
-        Me.ClientSize = New System.Drawing.Size(484, 461)
+        Me.ClientSize = New System.Drawing.Size(484, 377)
         Me.Controls.Add(Me.GroupBox6)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
@@ -364,6 +445,8 @@ Partial Class Form1
         Me.GroupBox2.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         Me.GroupBox8.ResumeLayout(False)
@@ -403,4 +486,11 @@ Partial Class Form1
     Friend WithEvents GroupBox8 As GroupBox
     Friend WithEvents ComboBox2 As ComboBox
     Friend WithEvents Label8 As Label
+    Friend WithEvents TextBox7 As TextBox
+    Friend WithEvents TextBox6 As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Button4 As Button
+    Friend WithEvents RadioButton4 As RadioButton
+    Friend WithEvents RadioButton3 As RadioButton
 End Class

@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Public Class Form1
     '143 x 255
-    Public Declare Auto Function SetCursorPos Lib "User32.dll" (ByVal x As Integer, ByVal y As Integer) As Long
+    Public Declare Function SetCursorPos Lib "User32.dll" (ByVal x As Integer, ByVal y As Integer) As Long
     Public Declare Auto Function GetCursorPos Lib "User32.dll" (ByRef p As Point) As Long
 
     Private Declare Sub mouse_event Lib "user32" (ByVal dwflags As Long, ByVal dx As Long, ByVal cbuttons As Long, ByVal dy As Long, ByVal dwExtraInfo As Long)
@@ -32,37 +32,30 @@ Public Class Form1
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         delayTimer.Enabled = False
-        'Dim p As Point = New Point(0, 0)
-        'GetCursorPos(p)
+
         If RadioButton4.Checked = True Then
             Dim x As Integer
             Dim y As Integer
-            'Dim test1 As String = TextBox6.Text
-            'Dim test2 As String = TextBox7.Text
+
+            Dim test1 As String = TextBox6.Text
+            Dim test2 As String = TextBox7.Text
 
             Try
-                'x = CInt(test1)
-                'y = CInt(test2)
-                x = 800
-                y = 800
+                x = CInt(test1)
+                y = CInt(test2)
 
                 SetCursorPos(x, y)
+
             Catch ex As Exception
                 MsgBox(ex.Message)
 
             End Try
 
-            'SetCursorPos(x, y)
-            'Dim p As Point = New Point(0, 0)
-
-            'Dim ran As Boolean = False
-            'If ran = False Then
-            'ursorPos(p)
-            'MsgBox(p.X.ToString, p.Y.ToString)
-            'ran = True
-            'End If
-
         End If
+
+
+
+
         If selectedItem = "Left" Then
 
             If selectedItem2 = "Double" Then
@@ -71,7 +64,7 @@ Public Class Form1
                 mouse_event(mouseclickdown, 0, 0, 0, 0)
                 mouse_event(mouseclickup, 0, 0, 0, 0)
             ElseIf selectedItem2 = "Single" Then
-                SetCursorPos(Me.Location.X, Me.Location.Y)
+
                 mouse_event(mouseclickdown, 0, 0, 0, 0)
                 mouse_event(mouseclickup, 0, 0, 0, 0)
             End If
@@ -219,4 +212,6 @@ Public Class Form1
     Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
         selectedItem2 = ComboBox2.Items(ComboBox2.SelectedIndex)
     End Sub
+
+
 End Class

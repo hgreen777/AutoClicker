@@ -349,21 +349,23 @@ Partial Class Form1
         '
         'Button1
         '
+        Me.Button1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.Button1.Location = New System.Drawing.Point(18, 297)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(224, 71)
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "Start"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'Button2
         '
+        Me.Button2.BackColor = System.Drawing.Color.DarkGray
         Me.Button2.Location = New System.Drawing.Point(248, 297)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(224, 71)
         Me.Button2.TabIndex = 4
         Me.Button2.Text = "Stop"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.UseVisualStyleBackColor = False
         '
         'Timer1
         '

@@ -84,6 +84,12 @@ Public Class Form1
         If RadioButton1.Checked = True Then
             If clickAmount = clickCount Then
                 running = False
+
+                Button2.Enabled = False
+                Button1.Enabled = True
+                Button1.BackColor = Color.WhiteSmoke
+                Button2.BackColor = Color.DarkGray
+
                 Timer1.Enabled = False
 
             End If
@@ -91,11 +97,16 @@ Public Class Form1
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        
+
         If running = False Then
-            delayTimer.enabled = True 
+
+            delayTimer.Enabled = True
             running = True
-        End If 
+            Button1.Enabled = False
+            Button2.Enabled = True
+            Button1.BackColor = Color.DarkGray
+            Button2.BackColor = Color.WhiteSmoke
+        End If
 
 
     End Sub
@@ -122,8 +133,13 @@ Public Class Form1
         If running = True Then
             Timer1.Enabled = False
             running = False
+            Button2.Enabled = False
+            Button1.Enabled = True
+            Button1.BackColor = Color.WhiteSmoke
+            Button2.BackColor = Color.DarkGray
+
         End If
-        
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load

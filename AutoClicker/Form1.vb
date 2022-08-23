@@ -10,6 +10,7 @@ Public Class Form1
     Private Const mouserightdown = 8
     Private Const mouserightup = 10
 
+    Dim running As Boolean = False
 
     Dim milli As Integer
     Dim sec As Integer
@@ -26,9 +27,6 @@ Public Class Form1
     Dim selectedItem As String
     Dim selectedItem2 As String
 
-    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
-
-    End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         delayTimer.Enabled = False
@@ -85,14 +83,19 @@ Public Class Form1
         clickCount += 1
         If RadioButton1.Checked = True Then
             If clickAmount = clickCount Then
+                running = False
                 Timer1.Enabled = False
+
             End If
         End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        delayTimer.Enabled = True
-
+        
+        If running = False Then
+            delayTimer.enabled = True 
+            running = True
+        End If 
 
 
     End Sub
@@ -116,7 +119,11 @@ Public Class Form1
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Timer1.Enabled = False
+        If running = True Then
+            Timer1.Enabled = False
+            running = False
+        End If
+        
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -168,13 +175,6 @@ Public Class Form1
         Label5.Text = text
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
-
-    End Sub
-
-    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
-
-    End Sub
 
     Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
         Dim text As String = TextBox4.Text

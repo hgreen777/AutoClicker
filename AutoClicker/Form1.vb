@@ -11,6 +11,7 @@ Public Class Form1
     Private Const mouserightup = 10
 
     Dim running As Boolean = False
+    Dim switch As Integer = 1
 
     Dim milli As Integer
     Dim sec As Integer
@@ -89,7 +90,7 @@ Public Class Form1
                 Button1.Enabled = True
                 Button1.BackColor = Color.WhiteSmoke
                 Button2.BackColor = Color.DarkGray
-
+                switch = 1
                 Timer1.Enabled = False
 
             End If
@@ -106,6 +107,7 @@ Public Class Form1
             Button2.Enabled = True
             Button1.BackColor = Color.DarkGray
             Button2.BackColor = Color.WhiteSmoke
+            switch = 2
         End If
 
 
@@ -137,7 +139,7 @@ Public Class Form1
             Button1.Enabled = True
             Button1.BackColor = Color.WhiteSmoke
             Button2.BackColor = Color.DarkGray
-
+            switch = 1
         End If
 
     End Sub
@@ -146,6 +148,8 @@ Public Class Form1
         TextBox1.Text = "100"
         ComboBox1.SelectedIndex = 0
         ComboBox2.SelectedIndex = 0
+
+
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
@@ -229,22 +233,124 @@ Public Class Form1
         selectedItem2 = ComboBox2.Items(ComboBox2.SelectedIndex)
     End Sub
 
-
     Private Sub Button1_KeyDown(sender As Object, e As KeyEventArgs) Handles Button1.KeyDown
-
-        If e.KeyCode = Keys.F6 Then
-            'MsgBox("H")
+        If e.KeyCode = Keys.F6 And switch = 1 Then
             Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
         End If
     End Sub
 
     Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
-        If e.KeyCode = Keys.F6 Then
-            MsgBox("H")
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
             Button2_Click(Nothing, Nothing)
+            switch = 1
         End If
-        'Change how it works, this only wuns while the button is focused
-        'Maybe try doing it on form with a switching variable
     End Sub
 
+    Private Sub TextBox3_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox3.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub TextBox2_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox2.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub Button3_KeyDown(sender As Object, e As KeyEventArgs) Handles Button3.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub TextBox5_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox5.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub TextBox4_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox4.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub Button4_KeyDown(sender As Object, e As KeyEventArgs) Handles Button4.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub TextBox6_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox6.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
+
+    Private Sub TextBox7_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox7.KeyDown
+        If e.KeyCode = Keys.F6 And switch = 1 Then
+            Button1_Click(Nothing, Nothing)
+            switch = 2
+
+        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
+            Button2_Click(Nothing, Nothing)
+            switch = 1
+        End If
+    End Sub
 End Class

@@ -230,4 +230,21 @@ Public Class Form1
     End Sub
 
 
+    Private Sub Button1_KeyDown(sender As Object, e As KeyEventArgs) Handles Button1.KeyDown
+
+        If e.KeyCode = Keys.F6 Then
+            'MsgBox("H")
+            Button1_Click(Nothing, Nothing)
+        End If
+    End Sub
+
+    Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
+        If e.KeyCode = Keys.F6 Then
+            MsgBox("H")
+            Button2_Click(Nothing, Nothing)
+        End If
+        'Change how it works, this only wuns while the button is focused
+        'Maybe try doing it on form with a switching variable
+    End Sub
+
 End Class

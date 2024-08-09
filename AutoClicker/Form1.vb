@@ -8,10 +8,10 @@ Public Class Form1
     Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer                                                                       ' Used for listening for key presses.
 
     ' Declaring constants for interfacing with mouse_event.
-    Private Const mouseclickup = 4
-    Private Const mouseclickdown = 2
-    Private Const mouserightdown = 8
-    Private Const mouserightup = 10
+    Private Const mouseclickup = &H4
+    Private Const mouseclickdown = &H2
+    Private Const mouserightdown = &H8
+    Private Const mouserightup = &H10
 
     ' Declaring variables for the program.
     ' Handles the current status of the autoclicker.
@@ -67,18 +67,15 @@ Public Class Form1
             Dim x As Integer
             Dim y As Integer
 
-            Dim test1 As String = TextBox6.Text
-            Dim test2 As String = TextBox7.Text
-
             Try
-                x = CInt(test1)
-                y = CInt(test2)
+                x = CInt(TextBox6.Text)
+                y = CInt(TextBox7.Text)
 
                 SetCursorPos(x, y)
 
             Catch ex As Exception
                 MsgBox(ex.Message)
-
+                Timer1.Enabled = False  ' Quit processing if there is an error.
             End Try
 
         End If

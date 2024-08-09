@@ -11,4 +11,4 @@ Features:
 - Selection for repeating clicking until stopped or click a certain amount of times.
 - Add a click delay (time between starting the program and clicking starting)
 - Allows for clicking wherever the user leaves the mouse or to click in a specific position, set when user clicks "Pick Location" and follows the instructions.
-- Start and stop automatic clicking with "F6"
+- Start and stop automatic clicking with "F6" <- Only works when the window is focused aka it doesnt work as you think it does.

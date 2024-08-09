@@ -1,37 +1,68 @@
 ﻿Imports System.Runtime.InteropServices
 Public Class Form1
     '143 x 255
-    Public Declare Function SetCursorPos Lib "User32.dll" (ByVal x As Integer, ByVal y As Integer) As Long
-    Public Declare Auto Function GetCursorPos Lib "User32.dll" (ByRef p As Point) As Long
+    ' "Importing" Functions
+    Public Declare Function SetCursorPos Lib "User32.dll" (ByVal x As Integer, ByVal y As Integer) As Long                                                      ' Used for setting the mouse position.
+    Public Declare Auto Function GetCursorPos Lib "User32.dll" (ByRef p As Point) As Long                                                                       ' Used for getting the current mouse position.
+    Private Declare Sub mouse_event Lib "user32" (ByVal dwflags As Long, ByVal dx As Long, ByVal cbuttons As Long, ByVal dy As Long, ByVal dwExtraInfo As Long) ' Using mouse_event function to handle mouse clikcs.
+    Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer                                                                       ' Used for listening for key presses.
 
-    Private Declare Sub mouse_event Lib "user32" (ByVal dwflags As Long, ByVal dx As Long, ByVal cbuttons As Long, ByVal dy As Long, ByVal dwExtraInfo As Long)
+    ' Declaring constants for interfacing with mouse_event.
     Private Const mouseclickup = 4
     Private Const mouseclickdown = 2
     Private Const mouserightdown = 8
     Private Const mouserightup = 10
 
+    ' Declaring variables for the program.
+    ' Handles the current status of the autoclicker.
     Dim running As Boolean = False
     Dim switch As Integer = 1
 
+    ' Used to store the current interval between clicks.
     Dim milli As Integer
     Dim sec As Integer
     Dim mins As Integer
+    Dim total As Integer
 
-
+    ' Poorly named but used to keep track of clicks for the test click button.
     Dim test As Integer
 
 
-    Dim clickCount As Integer = 0
-    Dim clickAmount As Integer = 1
+    Dim clickCount As Integer = 0       ' Keeps track of the amount of clicks that have been performed so far.
+    Dim clickAmount As Integer = 1      ' Used to store the amount of clicks the user wants to stop the autoclicker at. [Starts at 1 so textbox is not empty]
 
-    Dim delay As Integer
-    Dim selectedItem As String
-    Dim selectedItem2 As String
+    Dim delay As Integer                ' Determins the delay between starting the autoclicker and the first click.
+    Dim selectedItem As String          ' Determines whether left or right click.
+    Dim selectedItem2 As String         ' Determines whether single or double click.
 
+    ' PROCESSING DRIVER FUNCTIONS
 
+    ' Handles actual Clicking functionality.
+    Sub leftClick(x As Integer)
+        For i = 1 To x
+            mouse_event(mouseclickdown, 0, 0, 0, 0)
+            mouse_event(mouseclickup, 0, 0, 0, 0)
+        Next
+    End Sub
+    Sub rightClick(x As Integer)
+        For i = 1 To x
+            mouse_event(mouserightdown, 0, 0, 0, 0)
+            mouse_event(mouserightup, 0, 0, 0, 0)
+        Next
+    End Sub
+
+    ' PROCESSING EVENT LISTENERS
+
+    ' Used for the delay timer to start the autoclicker.
+    Private Sub delayTimer_Tick(sender As Object, e As EventArgs) Handles delayTimer.Tick
+        ' As soon as this timer ticks, start the main timer for autoclicking.
+        Timer1.Enabled = True
+        delayTimer.Enabled = False  ' Stop the delay timer as it is not needed anymore.
+    End Sub
+
+    ' Handling the clicking when running [using clock ticks]
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        delayTimer.Enabled = False
-
+        ' If the user wants to move the mouse to a specific location.
         If RadioButton4.Checked = True Then
             Dim x As Integer
             Dim y As Integer
@@ -52,143 +83,120 @@ Public Class Form1
 
         End If
 
-
-
-
+        ' Based of the users selection, the program will click the mouse.
         If selectedItem = "Left" Then
 
-            If selectedItem2 = "Double" Then
-                mouse_event(mouseclickdown, 0, 0, 0, 0)
-                mouse_event(mouseclickup, 0, 0, 0, 0)
-                mouse_event(mouseclickdown, 0, 0, 0, 0)
-                mouse_event(mouseclickup, 0, 0, 0, 0)
-            ElseIf selectedItem2 = "Single" Then
-
-                mouse_event(mouseclickdown, 0, 0, 0, 0)
-                mouse_event(mouseclickup, 0, 0, 0, 0)
-            End If
+            If selectedItem2 = "Double" Then leftClick(2)
+            If selectedItem2 = "Single" Then leftClick(1)
 
         ElseIf selectedItem = "Right" Then
-            If selectedItem2 = "Double" Then
-                mouse_event(mouserightdown, 0, 0, 0, 0)
-                mouse_event(mouserightup, 0, 0, 0, 0)
-                mouse_event(mouserightdown, 0, 0, 0, 0)
-                mouse_event(mouserightup, 0, 0, 0, 0)
-            ElseIf selectedItem2 = "Single" Then
-                mouse_event(mouserightdown, 0, 0, 0, 0)
-                mouse_event(mouserightup, 0, 0, 0, 0)
-            End If
-
+            If selectedItem2 = "Double" Then rightClick(2)
+            If selectedItem2 = "Single" Then rightClick(1)
         End If
 
+        ' Handling if the user wants to stop the autoclicker after a certain amount of clicks.
         clickCount += 1
         If RadioButton1.Checked = True Then
+            ' Disabling the clickign
             If clickAmount = clickCount Then
+                ' Resetting variables.
                 running = False
 
+                ' Disabling timers and sorting start & stop buttons.
                 Button2.Enabled = False
                 Button1.Enabled = True
                 Button1.BackColor = Color.WhiteSmoke
                 Button2.BackColor = Color.DarkGray
-                switch = 1
+                switch = 1                          ' Mode switch.
                 Timer1.Enabled = False
 
             End If
         End If
     End Sub
 
+    ' Start Button. [Used for starting the autoclicker]
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
         If running = False Then
+            ' Check Valid Data Input - interval, click amount, delay.
+            ' Checking valid interval data.
+            Try
+                milli = CInt(TextBox1.Text)
+                sec = CInt(TextBox2.Text)
+                mins = CInt(TextBox3.Text)
 
-            delayTimer.Enabled = True
+                total = milli + (sec * 1000) + (mins * 60 * 1000) / 100
+
+                If total < 1 Then
+                    MsgBox("Please enter a valid interval [ > 1millisecond")
+                    Exit Sub
+                End If
+
+                Timer1.Interval = total
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                Exit Sub
+            End Try
+            ' Checking click amount data.
+            If RadioButton1.Checked = True Then
+                Try
+                    clickAmount = CInt(TextBox4.Text)
+                    If clickAmount < 1 Then
+                        MsgBox("Please enter a valid click amount")
+                        Exit Sub
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.Message)
+                    Exit Sub
+                End Try
+            End If
+            ' Checking delay data. - ensure integer & >= 0
+            Try
+                delay = CInt(TextBox5.Text)
+                If delay < 0 Then
+                    MsgBox("Please enter a valid delay")
+                    Exit Sub
+                End If
+                delayTimer.Interval = (delay * 1000) + 1
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                Exit Sub
+            End Try
+
+
+
+            ' Resetting the click count.
+            clickCount = 0                          ' Resetting the click count.
+            delayTimer.Enabled = True               ' Start the delay timer if there is a delay [if not will tick instantly and will start the autoclicker]
+            ' Setting the mode to running.
             running = True
+            switch = 2
+            ' Handle buttons
             Button1.Enabled = False
             Button2.Enabled = True
             Button1.BackColor = Color.DarkGray
             Button2.BackColor = Color.WhiteSmoke
-            switch = 2
+
         End If
-
-
     End Sub
 
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-        Dim text As String = TextBox1.Text
-        Try
-            milli = CInt(text)
-            Interval()
-        Catch ex As Exception
-            If TextBox1.Text = "" Then
-
-            Else
-                MsgBox(ex.Message)
-            End If
-
-        End Try
-
-
-
-    End Sub
-
+    ' Stop Button. [Used for stopping the autoclicker]
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If running = True Then
-            Timer1.Enabled = False
+
+            Timer1.Enabled = False                  ' Stop the interval timer.
+            ' Setting the mode to stopped.
             running = False
+            switch = 1
+            ' Handle buttons
             Button2.Enabled = False
             Button1.Enabled = True
             Button1.BackColor = Color.WhiteSmoke
             Button2.BackColor = Color.DarkGray
-            switch = 1
+
         End If
-
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TextBox1.Text = "100"
-        ComboBox1.SelectedIndex = 0
-        ComboBox2.SelectedIndex = 0
-
-
-    End Sub
-
-    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
-        Dim text As String = TextBox2.Text
-        Try
-            sec = CInt(text)
-            Interval()
-        Catch ex As Exception
-            If TextBox2.Text = "" Then
-
-            Else
-                MsgBox(ex.Message)
-            End If
-
-        End Try
-    End Sub
-
-    Private Sub Interval()
-        Dim final As Integer
-        final = milli + (sec * 1000) + (mins * 60 * 1000)
-
-        Timer1.Interval = final
-    End Sub
-
-    Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
-        Dim text As String = TextBox3.Text
-        Try
-            mins = CInt(text)
-            Interval()
-        Catch ex As Exception
-            If TextBox3.Text = "" Then
-
-            Else
-                MsgBox(ex.Message)
-            End If
-
-        End Try
-    End Sub
-
+    ' Used for testing if the autoclicker is working. [Updates label based on the amount of clicks]
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         test += 1
         Dim text As String = CInt(test)
@@ -196,161 +204,63 @@ Public Class Form1
     End Sub
 
 
-    Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
-        Dim text As String = TextBox4.Text
-        Try
-            clickAmount = CInt(text)
+    ' SETTING UP FOR PROCESSING
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
-        Catch ex As Exception
+        ' Program minimizes, instructs user to click on the location they want the mouse to move to after closing the message box to reopen the program.
+        ' Instruct user on what to do.
+        MsgBox("After closing this message box, please click the location you want the mouse to move to.")
+        ' Minimize the program.
+        Me.WindowState = FormWindowState.Minimized
 
-            MsgBox(ex.Message)
-            MsgBox("Please enter a number")
+        ' Wait for the user to click & record the coordinates in p.
+        Dim p As Point
+        While True
+            If GetAsyncKeyState(Keys.LButton) Then
+                Exit While
+            End If
+        End While
 
+        GetCursorPos(p)
 
-        End Try
+        ' Update the UI to reflect the new coordinates.
+        TextBox6.Text = p.X
+        TextBox7.Text = p.Y
+
+        ' Restore the program.
+        Me.WindowState = FormWindowState.Normal
     End Sub
 
-    Private Sub TextBox5_TextChanged(sender As Object, e As EventArgs) Handles TextBox5.TextChanged
-        Dim text As String = TextBox5.Text
-        Try
-            delay = CInt(text)
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-        delayTimer.Interval = (delay * 1000) + 1
-    End Sub
-
-    Private Sub delayTimer_Tick(sender As Object, e As EventArgs) Handles delayTimer.Tick
-        Timer1.Enabled = True
-    End Sub
-
+    ' Handles the click type selection. [Left or right]
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
         selectedItem = ComboBox1.Items(ComboBox1.SelectedIndex)
     End Sub
 
+    ' Handles the click type selection. [Single or double]
     Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
         selectedItem2 = ComboBox2.Items(ComboBox2.SelectedIndex)
     End Sub
 
-    Private Sub Button1_KeyDown(sender As Object, e As KeyEventArgs) Handles Button1.KeyDown
+    ' Handles hotkey usage for starting and stopping autoclicker [F6]
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        ' Check if the F6 key is pressed adn if the process is currently running.
         If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
+            Button1_Click(Nothing, Nothing)         ' Treat it like the user has just pressed the start button.
+            switch = 2                              ' set the mode to running.
 
         ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
+            Button2_Click(Nothing, Nothing)         ' Treat it like the user has just pressed the stop button.
+            switch = 1                              ' set the mode to stopped.
         End If
     End Sub
 
-    Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
+    ' Initial processing for forms.
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Resetting all the textboxes and comboboxes.
+        TextBox1.Text = "100"
+        ComboBox1.SelectedIndex = 0
+        ComboBox2.SelectedIndex = 0
 
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox3_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox3.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox2_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox2.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub Button3_KeyDown(sender As Object, e As KeyEventArgs) Handles Button3.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox5_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox5.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox4_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox4.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub Button4_KeyDown(sender As Object, e As KeyEventArgs) Handles Button4.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox6_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox6.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
-    End Sub
-
-    Private Sub TextBox7_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox7.KeyDown
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)
-            switch = 2
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)
-            switch = 1
-        End If
+        Me.KeyPreview = True        ' Enable the form to listen for key presses. [Used for hot keys]
     End Sub
 End Class

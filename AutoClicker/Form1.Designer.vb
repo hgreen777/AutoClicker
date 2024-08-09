@@ -89,6 +89,7 @@ Partial Class Form1
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(86, 23)
         Me.TextBox3.TabIndex = 5
+        Me.TextBox3.Text = "0"
         '
         'Label4
         '
@@ -105,6 +106,7 @@ Partial Class Form1
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(86, 23)
         Me.TextBox2.TabIndex = 3
+        Me.TextBox2.Text = "0"
         '
         'Label3
         '
@@ -130,6 +132,7 @@ Partial Class Form1
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(86, 23)
         Me.TextBox1.TabIndex = 0
+        Me.TextBox1.Text = "0"
         '
         'Label1
         '
@@ -289,6 +292,7 @@ Partial Class Form1
         Me.TextBox7.Size = New System.Drawing.Size(35, 23)
         Me.TextBox7.TabIndex = 8
         Me.TextBox7.Text = "1920"
+        Me.TextBox7.Enabled = False
         '
         'TextBox6
         '
@@ -298,6 +302,7 @@ Partial Class Form1
         Me.TextBox6.Size = New System.Drawing.Size(35, 23)
         Me.TextBox6.TabIndex = 7
         Me.TextBox6.Text = "1920"
+        Me.TextBox6.Enabled = False
         '
         'Label10
         '

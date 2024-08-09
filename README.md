@@ -12,6 +12,3 @@ Features:
 - Add a click delay (time between starting the program and clicking starting)
 - Allows for clicking wherever the user leaves the mouse or to click in a specific position, set when user clicks "Pick Location" and follows the instructions.
 - Start and stop automatic clicking with "F6"
-
-Potential Bug:
-- May temporarily break mouse [restart mouse (unplug & plug back in), or restart machine]

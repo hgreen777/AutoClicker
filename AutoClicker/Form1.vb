@@ -23,7 +23,7 @@ Public Class Form1
     ' Declare the keyboard hook handle
     Private keyboardHookHandle As IntPtr
 
-    ' Create an instance of the keyboard hook delegate
+    ' Create an instance of the keyboard hook delegate - need to remove and insert new gloabl keyboard hook code.
     'Private keyboardHookDelegate As KeyboardHookDelegate = New KeyboardHookDelegate(AddressOf KeyboardHookCallback)
 
     ' Declaring constants for interfacing with mouse_event.
@@ -220,7 +220,7 @@ Public Class Form1
     End Sub
 
 
-    ' SETTING UP FOR PROCESSING
+    ' SETTING UP FOR PROCESSING 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
         ' Program minimizes, instructs user to click on the location they want the mouse to move to after closing the message box to reopen the program.

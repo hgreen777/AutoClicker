@@ -8,23 +8,12 @@ Public Class Form1
     Private Declare Sub mouse_event Lib "user32" (ByVal dwflags As Long, ByVal dx As Long, ByVal cbuttons As Long, ByVal dy As Long, ByVal dwExtraInfo As Long) ' Using mouse_event function to handle mouse clikcs.
     Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer                                                                       ' Used for listening for key presses.
 
-    ' Declare the global keyboard hook function()
-    Private Declare Function SetWindowsHookEx Lib "user32" Alias "SetWindowsHookExA" (ByVal idHook As Integer, ByVal lpfn As KeyboardHookDelegate, ByVal hmod As IntPtr, ByVal dwThreadId As Integer) As IntPtr
-
-    ' Declare the keyboard hook delegate
-    Private Delegate Function KeyboardHookDelegate(ByVal nCode As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-
-    ' Declare the keyboard hook ID
-    Private Const WH_KEYBOARD_LL As Integer = 13
+    ' Keyboard Hook Functions
+    Public Declare Auto Function RegisterHotKey Lib "user32" (ByVal hwnd As IntPtr, ByVal id As Integer, ByVal fsModifiers As Integer, ByVal vk As Integer) As Boolean
+    Public Declare Auto Function UnregisterHotKey Lib "user32" (ByVal hwnd As IntPtr, ByVal id As Integer) As Boolean
 
     ' Declare the F6 key code
     Private Const VK_F6 As Integer = &H75
-
-    ' Declare the keyboard hook handle
-    Private keyboardHookHandle As IntPtr
-
-    ' Create an instance of the keyboard hook delegate - need to remove and insert new gloabl keyboard hook code.
-    'Private keyboardHookDelegate As KeyboardHookDelegate = New KeyboardHookDelegate(AddressOf KeyboardHookCallback)
 
     ' Declaring constants for interfacing with mouse_event.
     Private Const mouseclickup = &H4
@@ -72,6 +61,7 @@ Public Class Form1
 
     ' PROCESSING EVENT LISTENERS
 
+#Region "Handling Timer Ticks"
     ' Used for the delay timer to start the autoclicker.
     Private Sub delayTimer_Tick(sender As Object, e As EventArgs) Handles delayTimer.Tick
         ' As soon as this timer ticks, start the main timer for autoclicking.
@@ -130,6 +120,9 @@ Public Class Form1
         End If
     End Sub
 
+#End Region
+
+#Region "Start & Stop Button Click Events"
     ' Start Button. [Used for starting the autoclicker]
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If running = False Then
@@ -212,6 +205,8 @@ Public Class Form1
         End If
     End Sub
 
+#End Region
+
     ' Used for testing if the autoclicker is working. [Updates label based on the amount of clicks]
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         test += 1
@@ -221,6 +216,7 @@ Public Class Form1
 
 
     ' SETTING UP FOR PROCESSING 
+#Region "Handling User set-up for autoclicking functionality [Picking location & combobox selection"
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
         ' Program minimizes, instructs user to click on the location they want the mouse to move to after closing the message box to reopen the program.
@@ -256,57 +252,31 @@ Public Class Form1
     Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
         selectedItem2 = ComboBox2.Items(ComboBox2.SelectedIndex)
     End Sub
+#End Region
 
-    ' Keyboard hook callback function
-    Private Function KeyboardHookCallback(ByVal nCode As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-        If nCode >= 0 AndAlso wParam = IntPtr.Zero Then
-            Dim vkCode As Integer = Marshal.ReadInt32(lParam)
-
-            ' Check if the F6 key is pressed and if the process is currently running
-            If vkCode = VK_F6 AndAlso switch = 1 Then
-                Button1_Click(Nothing, Nothing)         ' Treat it like the user has just pressed the start button.
-                switch = 2                              ' Set the mode to running.
-            ElseIf vkCode = VK_F6 AndAlso switch = 2 Then
-                Button2_Click(Nothing, Nothing)         ' Treat it like the user has just pressed the stop button.
-                switch = 1                              ' Set the mode to stopped.
+#Region "Keyboard Hook"
+    Protected Overrides Sub WndProc(ByRef m As Message)
+        ' Check if the hotkey was pressed
+        If m.Msg = &H312 Then
+            ' Check if the hotkey was the F6 key
+            If m.WParam = VK_F6 Then
+                ' If the program is running, stop it
+                If switch = 1 Then
+                    Button1_Click(Nothing, Nothing)
+                    switch = 2
+                    ' If the program is stopped, start it
+                ElseIf switch = 2 Then
+                    Button2_Click(Nothing, Nothing)
+                    switch = 1
+                End If
             End If
         End If
 
-        Return CallNextHookEx(keyboardHookHandle, nCode, wParam, lParam)
-    End Function
-
-    ' Declare the CallNextHookEx function
-    Private Declare Function CallNextHookEx Lib "user32" (ByVal hhk As IntPtr, ByVal nCode As Integer, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-
-    ' Declare the UnhookWindowsHookEx function
-    Private Declare Function UnhookWindowsHookEx Lib "user32" (ByVal hhk As IntPtr) As Boolean
-
-    ' Start the keyboard hook
-    Private Sub StartKeyboardHook()
-        keyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, keyboardHookDelegate, IntPtr.Zero, 0)
+        MyBase.WndProc(m)
     End Sub
+#End Region
 
-    ' Stop the keyboard hook
-    Private Sub StopKeyboardHook()
-        UnhookWindowsHookEx(keyboardHookHandle)
-    End Sub
-
-    ' ...
-    ' please implement this ^^
-    '
-
-    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        ' Check if the F6 key is pressed adn if the process is currently running.
-        If e.KeyCode = Keys.F6 And switch = 1 Then
-            Button1_Click(Nothing, Nothing)         ' Treat it like the user has just pressed the start button.
-            switch = 2                              ' set the mode to running.
-
-        ElseIf e.KeyCode = Keys.F6 And switch = 2 Then
-            Button2_Click(Nothing, Nothing)         ' Treat it like the user has just pressed the stop button.
-            switch = 1                              ' set the mode to stopped.
-        End If
-    End Sub
-
+#Region "Form Load & Close"
     ' Initial processing for forms.
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Resetting all the textboxes and comboboxes.
@@ -314,15 +284,17 @@ Public Class Form1
         ComboBox1.SelectedIndex = 0
         ComboBox2.SelectedIndex = 0
 
-        ' Start the keyboard hook
-        StartKeyboardHook()
+
+        ' Register the hotkey so it can be detected
+        RegisterHotKey(Me.Handle, VK_F6, 0, VK_F6)
 
         Me.KeyPreview = True        ' Enable the form to listen for key presses. [Used for hot keys]
     End Sub
 
     ' Clean up when the form is closed
     Private Sub Form1_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        ' Stop the keyboard hook
-        StopKeyboardHook()
+        ' Unregister the hotkey
+        UnregisterHotKey(Me.Handle, VK_F6)
     End Sub
+#End Region
 End Class

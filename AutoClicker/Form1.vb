@@ -71,52 +71,50 @@ Public Class Form1
 
     ' Handling the clicking when running [using clock ticks]
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        ' If the user wants to move the mouse to a specific location.
-        If RadioButton4.Checked = True Then
-            Dim x As Integer
-            Dim y As Integer
+        Dim does_mouse_need_to_move As Boolean = RadioButton4.Checked
+        Dim stopAfterClicks As Boolean = RadioButton1.Checked
 
+        ' If the user wants to move the mouse to a specific location.
+        If does_mouse_need_to_move Then
             Try
-                x = CInt(TextBox6.Text)
-                y = CInt(TextBox7.Text)
+                Dim x As Integer = CInt(TextBox6.Text)
+                Dim y As Integer = CInt(TextBox7.Text)
 
                 SetCursorPos(x, y)
 
             Catch ex As Exception
                 MsgBox(ex.Message)
                 Timer1.Enabled = False  ' Quit processing if there is an error.
+                Exit Sub
             End Try
 
         End If
 
         ' Based of the users selection, the program will click the mouse.
-        If selectedItem = "Left" Then
-
-            If selectedItem2 = "Double" Then leftClick(2)
-            If selectedItem2 = "Single" Then leftClick(1)
-
-        ElseIf selectedItem = "Right" Then
-            If selectedItem2 = "Double" Then rightClick(2)
-            If selectedItem2 = "Single" Then rightClick(1)
-        End If
+        Select Case selectedItem
+            Case "Left"
+                If selectedItem2 = "Double" Then leftClick(2)
+                If selectedItem2 = "Single" Then leftClick(1)
+            Case "Right"
+                If selectedItem2 = "Double" Then rightClick(2)
+                If selectedItem2 = "Single" Then rightClick(1)
+        End Select
 
         ' Handling if the user wants to stop the autoclicker after a certain amount of clicks.
         clickCount += 1
-        If RadioButton1.Checked = True Then
+        If stopAfterClicks AndAlso clickAmount >= clickCount Then
             ' Disabling the clickign
-            If clickAmount = clickCount Then
-                ' Resetting variables.
-                running = False
+            ' Resetting variables.
+            running = False
 
-                ' Disabling timers and sorting start & stop buttons.
-                Button2.Enabled = False
-                Button1.Enabled = True
-                Button1.BackColor = Color.WhiteSmoke
-                Button2.BackColor = Color.DarkGray
-                switch = 1                          ' Mode switch.
-                Timer1.Enabled = False
-
-            End If
+            ' Disabling timers and sorting start & stop buttons.
+            Button2.Enabled = False
+            Button1.Enabled = True
+            Button1.BackColor = Color.WhiteSmoke
+            Button2.BackColor = Color.DarkGray
+            switch = 1                          ' Mode switch.
+            Timer1.Enabled = False
+            Exit Sub
         End If
     End Sub
 

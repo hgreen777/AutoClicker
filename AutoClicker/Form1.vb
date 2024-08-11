@@ -102,7 +102,7 @@ Public Class Form1
 
         ' Handling if the user wants to stop the autoclicker after a certain amount of clicks.
         clickCount += 1
-        If stopAfterClicks AndAlso clickAmount >= clickCount Then
+        If stopAfterClicks AndAlso clickAmount <= clickCount Then
             ' Disabling the clickign
             ' Resetting variables.
             running = False
